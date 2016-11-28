@@ -1,10 +1,12 @@
-function route(handle, pathname) {
+function route(handle, pathname, res) {
   console.log('about to route a request for ' + pathname);
   if (typeof handle[pathname] === 'function') {
-    return handle[pathname](res);//passing the response object on from server.js's onRequest (which is part of the start() function).
+    handle[pathname](res);
+    //instead of expecting a return value from our request handlers, we pass the res object on
   } else {
     console.log('no request handler found for ' + pathname);
     res.writeHead(404, {'Content-Type': 'text/plain'});
+    res.write('404 not found');
     res.end();
   }
 }

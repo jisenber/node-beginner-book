@@ -1,15 +1,22 @@
-var exec = require('child_process').exec;
-//allows us to make use of a useful non-blocking operation exec(). exec() does is it executes a shell command from within Node.js
 function start(res) {
   console.log ('request handler \'start\' was called.');
 
-  exec('ls -lah', function (error, stdout, stderr) {
-    res.writeHead(200, {'Content-Type': 'text/plain'});
-    res.write(stdout);
-    res.end();
-  });
+  var body = '<html>' +
+  '<head>' +
+  '<meta http-equiv="content-Type" content = "text/html; ' +
+  'charset=UTF-8 />' +
+  '</head>' +
+  '<body>' +
+  '<form action = "/upload" method = "post">' +
+  '<textarea name = "text" rows = "20" cols ="60"> </textarea>' +
+  '<input type="submit" value = "submit text" />' +
+  '</form>' +
+  '</body>' +
+  '</html>';
 
-  return content; //content is still 'empty' because of asynchronous callback above.
+  res.writeHead(200, {'Content-Type': 'text/html'});
+  res.write(body);
+  res.end();
 }
 
 function upload(res) {
